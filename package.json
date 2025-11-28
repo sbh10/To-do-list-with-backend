@@ -1,10 +1,10 @@
 {
-  "description": "",
-  "devDependencies": {
-    "json-server": "^1.0.0-beta.3"
-  },
+  "name": "todo-api",
+  "version": "1.0.0",
   "scripts": {
-    "start:api": "json-server --watch db.json --port 3000",
-    "start:web": "live-server src --port=5500"
+    "start:api": "json-server --watch db.json --host 0.0.0.0 --port $PORT"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
   }
 }
