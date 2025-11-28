@@ -44,12 +44,15 @@ et
 git clone <votre-repo>
 cd tou-dou-liste
 
-// Installer les dépendances
-
-npm install
-
 // Lancer API + Frontend en parallèle
 
-npm run dev
+npm start
+
+## 🚀 Démo du site
+
+Grâce à Render + Netlify
+
+👉 **Voir l'application en ligne :**  
+https://todolist-with-api.netlify.app/
 
 Merci ! :raised_hands:
