@@ -1,0 +1,10 @@
+{
+  "description": "",
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.3"
+  },
+  "scripts": {
+    "start:api": "json-server --watch db.json --port 3000",
+    "start:web": "live-server src --port=5500"
+  }
+}
