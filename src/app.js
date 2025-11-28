@@ -6,7 +6,8 @@ const taskinput = document.getElementById("taskinput");
 const counterElement = document.getElementById("counter");
 const progressBarElement = document.getElementById("progressBar");
 
-let tasks = []; // tableau local synchronisé avec l'API
+let tasks = []; // toutes les tâches
+let filteredTasks = []; // tâches affichées
 
 // ---------- UTIL ----------
 function createTaskElement(task) {
@@ -18,7 +19,6 @@ function createTaskElement(task) {
   textSection.textContent = task.text;
   if (task.completed) textSection.style.textDecoration = "line-through";
 
-  // buttons container
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
 
@@ -41,7 +41,7 @@ function createTaskElement(task) {
 
 function renderTasks() {
   taskList.innerHTML = "";
-  tasks.forEach((t) => taskList.appendChild(createTaskElement(t)));
+  filteredTasks.forEach((t) => taskList.appendChild(createTaskElement(t)));
   updateCounter();
 }
 
@@ -63,8 +63,8 @@ async function loadTasks() {
   try {
     const res = await fetch(API);
     tasks = await res.json();
-    // optional: sort tasks with completed last
     tasks.sort((a, b) => Number(a.completed) - Number(b.completed));
+    filteredTasks = [...tasks];
     renderTasks();
   } catch (err) {
     console.error("Erreur chargement tasks:", err);
@@ -83,6 +83,7 @@ async function addTask() {
     });
     const saved = await res.json();
     tasks.push(saved);
+    filteredTasks = [...tasks];
     taskinput.value = "";
     renderTasks();
   } catch (err) {
@@ -101,6 +102,9 @@ async function editTask(task) {
     });
     const updated = await res.json();
     tasks = tasks.map((t) => (t.id === updated.id ? updated : t));
+    filteredTasks = filteredTasks.map((t) =>
+      t.id === updated.id ? updated : t
+    );
     renderTasks();
   } catch (err) {
     console.error("Erreur édition:", err);
@@ -112,6 +116,7 @@ async function deleteTask(id) {
   try {
     await fetch(`${API}/${id}`, { method: "DELETE" });
     tasks = tasks.filter((t) => t.id !== id);
+    filteredTasks = filteredTasks.filter((t) => t.id !== id);
     renderTasks();
   } catch (err) {
     console.error("Erreur suppression:", err);
@@ -127,20 +132,42 @@ async function toggleTaskCompleted(task) {
     });
     const updated = await res.json();
     tasks = tasks.map((t) => (t.id === updated.id ? updated : t));
+    filteredTasks = filteredTasks.map((t) =>
+      t.id === updated.id ? updated : t
+    );
     renderTasks();
   } catch (err) {
     console.error("Erreur toggle:", err);
   }
 }
 
-// ---------- EVENTS ----------
-taskinput?.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") addTask();
-});
-
-// si tu as un bouton "Ajouter"
-const addButton = document.querySelector(".champs button");
-addButton?.addEventListener("click", addTask);
-
 // ---------- START ----------
-document.addEventListener("DOMContentLoaded", loadTasks);
+document.addEventListener("DOMContentLoaded", () => {
+  loadTasks();
+
+  const addButton = document.getElementById("addTaskBtn");
+  addButton?.addEventListener("click", addTask);
+
+  const buttonDone = document.getElementById("button_done");
+  buttonDone?.addEventListener("click", () => {
+    filteredTasks = tasks.filter((t) => !t.completed);
+    renderTasks();
+  });
+
+  const buttonUndone = document.getElementById("button_undone");
+  buttonUndone?.addEventListener("click", () => {
+    tasks.sort((a, b) => Number(a.completed) - Number(b.completed));
+    filteredTasks = [...tasks];
+    renderTasks();
+  });
+
+  const buttonAll = document.getElementById("button_all");
+  buttonAll?.addEventListener("click", () => {
+    filteredTasks = [...tasks]; // copie toutes les tâches pour l'affichage
+    renderTasks();
+  });
+
+  taskinput?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") addTask();
+  });
+});

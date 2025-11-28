@@ -1,12 +1,3 @@
-header {
-  background: url("images_to_do_list/kids_mi.png");
-  background-size: contain;
-  width: 100%;
-  height: 150px;
-  margin: 0;
-  padding: 10px;
-}
-
 body {
   display: flex;
   justify-content: flex;
@@ -14,7 +5,7 @@ body {
   flex-direction: column;
   height: auto;
   margin: 0;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Montserrat", sans-serif;
   background: #fcfbf6;
   color: #252628;
 }
@@ -33,7 +24,6 @@ body {
 
 .containerFilter {
   color: #1b1909;
-  font-family: "Quicksand", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,21 +32,20 @@ body {
 #counter {
   margin-bottom: 20px;
   margin-top: 30px;
-  font-family: "Quicksand", sans-serif;
-  font-weight: 900;
-  font-size: large;
+  font-weight: 500;
+  font-size: medium;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(148, 215, 190);
+  color: #252628;
 }
 
 #progressContainer {
   width: 100%;
-  background-color: #e0e0e0;
+  background-color: rgba(232, 230, 223, 0.8);
   border-radius: 10px;
   overflow: hidden;
-  height: 20px;
+  height: 10px;
   margin-top: 10px;
 }
 
@@ -75,37 +64,48 @@ body {
 
 #button_done,
 #button_undone,
-#addTaskBtn {
+#button_all {
   background: rgba(232, 230, 223, 0.8); /* plus lumineux */
   border: 1px solid #1b1909;
   border-radius: 8px;
-  padding: 9px 10px;
+  padding: 8px 10px;
   color: #1b1909;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
   cursor: pointer;
 }
+#addTaskBtn {
+  background: rgba(148, 215, 190, 0.2);
+  border: 2px solid #1b1909;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #1b1909;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: bold;
+}
 
 h1 {
-  margin-bottom: 20px;
-  margin-top: 30px;
-  font-family: "Fredoka", sans-serif;
-  font-weight: 900;
+  margin-bottom: 65px;
+  margin-top: 65px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
   letter-spacing: 2px;
 }
 
 h2 {
-  font-family: "Fredoka", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 input[type="text"] {
-  width: 430px;
+  width: 480px;
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
-  height: 40px;
+  height: 20px;
   border-color: #1b1909;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Montserrat", sans-serif;
   border-width: 1px;
 }
 
@@ -113,13 +113,14 @@ ul {
   width: auto;
   list-style: none;
   padding: 0;
+  font-size: 14px;
 }
 
 button {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-family: "Quicksand", sans-serif;
+  font-family: "Montserrat", sans-serif;
   margin: 5px;
 }
 
@@ -149,8 +150,33 @@ ul li {
 }
 
 @media (max-width: 600px) {
-  .grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+  h1 {
+    font-size: 1.8rem;
+    margin: 40px 0;
+  }
+
+  input[type="text"] {
+    width: 100%;
+  }
+
+  #filteredTasks {
+    width: 100%;
+  }
+
+  .writeTaskContainer,
+  .containerFilter,
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #button_done,
+  #button_undone,
+  #button_all,
+  #addTaskBtn {
+    width: 90%; /* boutons prennent presque toute la largeur */
+    padding: 8px 6px;
+    font-size: 14px;
   }
 }
