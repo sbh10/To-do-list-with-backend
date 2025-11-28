@@ -1,5 +1,5 @@
 // src/app.js
-const API = "http://localhost:3000/tasks";
+const API = "https://to-do-list-with-backend-h9sm.onrender.com";
 
 const taskList = document.getElementById("taskList");
 const taskinput = document.getElementById("taskinput");
